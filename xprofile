@@ -1,0 +1,52 @@
+xmodmap ~/.Xmodmap
+xset -b
+xset r rate 200 25
+start_if_not_running()  {
+	procs="$(ps -a -o cmd)"
+	if ! echo "$procs" | grep -q -- "$1"; then
+		$1 &
+	fi
+}
+
+xrdb -merge ~/.Xresources
+
+case $(hostname) in
+    # Fat PC
+    Zeta-1-Reticuli)
+        # prevent screen from turning off
+        xset s off -dpms
+
+        # set up screens
+        xrandr --output HDMI-A-0 --auto --primary
+        xrandr --output HDMI-A-1 --left-of HDMI-A-0 --auto
+
+        # full volume
+        amixer set Master 100%
+    ;;
+
+    # Black bricks
+    Alpha-Mensae | Tau-Ceti | Epsilon-Eridani)
+        # Middle button scroll
+        xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
+        xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
+        xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
+        xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
+        xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.3
+
+        # Disable Trackpad
+        xinput --disable SynPS/2\ Synaptics\ TouchPad
+
+        # Start muted
+        amixer set Master 0
+
+	xsetwacom --set 'Wacom ISDv4 E6 Finger touch' touch off
+    ;;
+esac
+
+start_if_not_running redshift
+start_if_not_running fcitx
+start_if_not_running albert
+
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx

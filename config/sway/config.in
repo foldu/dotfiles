@@ -254,6 +254,7 @@ exec albert
 exec dunst
 exec pickwp daemon
 exec transparentd
+exec redshift
 
 bindsym $mod+x exec transparentd toggle
 

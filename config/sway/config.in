@@ -64,7 +64,7 @@ output HDMI-A-2 pos 0 0 res 1920x1200
 # Read `man 5 sway-input` for more information about this section.
 
 input * {
-    xkb_layout us
+    xkb_layout us,de
     xkb_options caps:escape
     repeat_delay 200
     repeat_rate 25
@@ -74,7 +74,13 @@ m4_ifelse(HOSTNAME, `Epsilon-Eridani', `
 input 2:7:SynPS/2_Synaptics_TouchPad {
     events disabled
 }
+
+input 1386:230:Wacom_ISDv4_E6_Finger {
+    events disabled
+}
 ')
+
+
 
 ### Key bindings
 #
@@ -248,12 +254,13 @@ gaps outer 0px
 
 # make some things floating by default
 for_window [title="^iv -"] floating enable
+for_window [title="adonis"] floating enable
 
 # autostart
 exec albert
-exec dunst
 exec pickwp daemon
 exec transparentd
+exec mako
 exec redshift
 
 bindsym $mod+x exec transparentd toggle

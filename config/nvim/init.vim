@@ -11,7 +11,6 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ 'branch': 'next',
             \ 'do': 'bash install.sh'
             \ }
-Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim'
 Plug 'roman/golden-ratio'

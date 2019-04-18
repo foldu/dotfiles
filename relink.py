@@ -29,13 +29,13 @@ def backup(path):
 def link(target, dest):
     target = target.absolute()
     dest = dest.absolute()
-    if dest.exists():
-        if dest.samefile(target):
+    if dest.is_symlink():
+        if dest.exists() and dest.samefile(target):
             return
-        elif dest.is_symlink():
-            dest.unlink()
         else:
-            backup(dest)
+            dest.unlink()
+    elif dest.is_file() or dest.is_dir():
+        backup(dest)
 
     dest.parent.mkdir(exist_ok=True)
     dest.symlink_to(target)

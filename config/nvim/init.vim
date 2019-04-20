@@ -34,6 +34,7 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'mhinz/vim-startify'
 Plug 'sakhnik/nvim-gdb'
 Plug 'fidian/hexmode'
+Plug 'meain/vim-package-info', { 'do': 'npm install' }
 
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'leafgarland/typescript-vim'

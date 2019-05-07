@@ -74,12 +74,17 @@ m4_ifelse(HOSTNAME, `Epsilon-Eridani', `
 input 2:7:SynPS/2_Synaptics_TouchPad {
     events disabled
 }
+')
 
+m4_ifelse(HOSTNAME, `Alpha-Mensae', `
 input 1386:230:Wacom_ISDv4_E6_Finger {
     events disabled
 }
-')
 
+input 2:7:SynPS/2_Synaptics_TouchPad {
+    events disabled
+}
+')
 
 
 ### Key bindings

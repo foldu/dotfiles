@@ -2,3 +2,4 @@
 config/fish/fish_variables
 config/ncmpcpp/error.log
 config/sway/config
+config/nvim/.netrwhist

@@ -6,49 +6,60 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
+" Color theme
 Plug 'altercation/vim-colors-solarized'
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh'
-            \ }
+
+" Fuzzy find thing
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim'
-Plug 'roman/golden-ratio'
+
+" Completion
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/float-preview.nvim'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-rsi'
-Plug 'KabbAmine/zeavim.vim'
-Plug 'w0rp/ale'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'tikhomirov/vim-glsl'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'liuchengxu/vim-which-key'
-Plug 'mhinz/vim-startify'
-Plug 'sakhnik/nvim-gdb'
-Plug 'fidian/hexmode'
-Plug 'meain/vim-package-info', { 'do': 'npm install' }
+Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh'
+            \ }
 
-Plug 'cespare/vim-toml', {'for': ['toml']}
-Plug 'leafgarland/typescript-vim'
-Plug 'dag/vim-fish', {'for': ['fish']}
-Plug 'LnL7/vim-nix', {'for': ['nix']}
-Plug 'peterhoeg/vim-qml', {'for': 'qml'}
-Plug 'vmchale/ion-vim', {'for': 'ion'}
-Plug 'rust-lang/rust.vim', {'for': ['rs', 'rust']}
-Plug 'stfl/meson.vim'
-Plug 'udalov/kotlin-vim', {'for': ['kt', 'kotlin']}
-Plug 'zah/nim.vim', {'for': ['nim']}
-Plug 'shiracamus/vim-syntax-x86-objdump-d'
-Plug 'jakwings/vim-pony', {'for': ['pony']}
+" Modify open file on fs
+Plug 'tpope/vim-eunuch'
+" Expand single line expression to multi line expression
+Plug 'AndrewRadev/splitjoin.vim'
+" Automatically resize windows when switching to them
+Plug 'roman/golden-ratio'
+" Better status line
+Plug 'itchyny/lightline.vim'
+" You need this
+Plug 'tpope/vim-surround'
+" Make repeat . work properly
+Plug 'tpope/vim-repeat'
+" Emacs keybindings for commandline
+Plug 'tpope/vim-rsi'
+" Apply editorconfig
+Plug 'editorconfig/editorconfig-vim'
+" Lint thing
+Plug 'w0rp/ale'
+" Show git file status in the gutter (left of line numbers)
+Plug 'airblade/vim-gitgutter'
+" Show command completion help when hitting <leader>
+Plug 'liuchengxu/vim-which-key'
+" GDB integration TODO: use this
+Plug 'sakhnik/nvim-gdb'
+" Automatically change working directory when opening project dirs
+Plug 'airblade/vim-rooter'
+" Turn vim into a hex editor
+Plug 'fidian/hexmode'
+" Show newest package version for Cargo.toml with virtualtext
+Plug 'meain/vim-package-info', { 'do': 'npm install' }
+" Latex
 Plug 'lervag/vimtex', {'for': ['latex', 'tex']}
+Plug 'justinmk/vim-sneak'
+
+" Syntax highlighters
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 let mapleader=" "
@@ -65,6 +76,7 @@ highlight VertSplit ctermbg=NONE
 "highlight StatusBar ctermfg=8
 highlight SignColumn ctermbg=15
 set fillchars+=vert:│
+let g:lightline = { 'colorscheme': 'default' }
 
 " Use the damn clipboard
 set clipboard=unnamedplus
@@ -143,7 +155,7 @@ set backspace=indent,eol,start
 set ruler
 
 " remove annoying bar
-set laststatus=1
+set laststatus=2
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
@@ -177,10 +189,7 @@ match trailing_ws /\s\+\%#\@<!$/
 set noshowmode
 
 " don't make my statusbar too big
-set cmdheight=1
-
-" I forgot what this does but it's probably important
-set hidden
+"set cmdheight=1
 
 " listen for file changes outside of nvim
 " https://github.com/neovim/neovim/issues/2127
@@ -223,6 +232,8 @@ let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'rust': ['rustfmt'],
             \   'python': ['black'],
+            \   'cpp': ['clang-format'],
+            \   'c': ['clang-format'],
             \   'sh': ['shfmt'],
             \   'xml': ['xmllint'],
             \}
@@ -241,10 +252,12 @@ nmap <leader><leader>z <Plug>ZVKeyDocset
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
             \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+" Make fzf close with ESC
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <F2> :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gD :call LanguageClient#textDocument_implementation()<CR>
 nnoremap <silent> <leader>a :call LanguageClient#textDocument_codeAction()<CR>

@@ -8,6 +8,7 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 " Color theme
 Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 
 " Fuzzy find thing
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
@@ -42,6 +43,8 @@ Plug 'tpope/vim-rsi'
 Plug 'editorconfig/editorconfig-vim'
 " Lint thing
 Plug 'w0rp/ale'
+" Some git functions
+Plug 'tpope/vim-fugitive'
 " Show git file status in the gutter (left of line numbers)
 Plug 'airblade/vim-gitgutter'
 " Show command completion help when hitting <leader>
@@ -65,18 +68,12 @@ call plug#end()
 let mapleader=" "
 
 " Colors
+let g:solarized_use16 = 1
 syntax enable
 set background=light
-colorscheme solarized
-let g:solarized_termcolors=256
-" make line numbers blend in
-highlight LineNr ctermbg=15
-"highlight LineNr ctermfg=10
-highlight VertSplit ctermbg=NONE
-"highlight StatusBar ctermfg=8
-highlight SignColumn ctermbg=15
+colorscheme solarized8_flat
 set fillchars+=vert:│
-let g:lightline = { 'colorscheme': 'default' }
+let g:lightline = { 'colorscheme': 'solarized' }
 
 " Use the damn clipboard
 set clipboard=unnamedplus

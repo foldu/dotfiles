@@ -60,6 +60,9 @@ Plug 'meain/vim-package-info', { 'do': 'npm install' }
 " Latex
 Plug 'lervag/vimtex', {'for': ['latex', 'tex']}
 Plug 'justinmk/vim-sneak'
+" snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 " Syntax highlighters
 Plug 'sheerun/vim-polyglot'
@@ -223,7 +226,9 @@ vnoremap < <gv
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-w> <C-\><C-n><C-w>
 
-let g:ale_linters = { 'asm': [] }
+let g:ale_rust_rls_executable = 'ra_lsp_server'
+let g:ale_rust_rls_toolchain = ''
+let g:ale_linters = { 'asm': [], 'rust': ['rls'] }
 let g:LanguageClient_hoverPreview = "Never"
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -281,3 +286,5 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 nnoremap <silent> <leader>      :<c-u>WhichKey '<leader>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+
+let g:neosnippet#enable_complete_done = 1

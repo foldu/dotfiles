@@ -233,6 +233,8 @@ let g:ale_fixers = {
             \   'c': ['clang-format'],
             \   'sh': ['shfmt'],
             \   'xml': ['xmllint'],
+            \   'javascript': ['eslint'],
+            \   'typescript': ['eslint'],
             \}
 let g:ale_fix_on_save = 1
 let g:ale_c_clang_options = "-std=c11 -Wall -pedantic -funroll-loops"

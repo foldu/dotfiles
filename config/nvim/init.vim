@@ -211,6 +211,7 @@ let g:LanguageClient_serverCommands = {
             \ 'c': ['clangd'],
             \ 'javascript': ['javascript-typescript-stdio'],
             \ 'typescript': ['javascript-typescript-stdio'],
+            \ 'yaml': ['yaml-language-server', '--stdio'],
             \ }
 
 
@@ -288,3 +289,9 @@ nnoremap <silent> <leader>      :<c-u>WhichKey '<leader>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 let g:neosnippet#enable_complete_done = 1
+
+" Navigate wrapped lines properly
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk

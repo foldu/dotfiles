@@ -120,6 +120,9 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+" disable arbitrary code execution on file open
+set nomodeline
+
 " Shut up
 set noerrorbells
 set novisualbell

@@ -15,15 +15,7 @@ Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
 Plug 'junegunn/fzf.vim'
 
 " Completion
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/float-preview.nvim'
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh'
-            \ }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 
 " Modify open file on fs
 Plug 'tpope/vim-eunuch'
@@ -71,10 +63,10 @@ call plug#end()
 let mapleader=" "
 
 " Colors
-let g:solarized_use16 = 1
+"let g:solarized_use16 = 1
 syntax enable
 set background=light
-colorscheme solarized8_flat
+colorscheme solarized
 set fillchars+=vert:│
 let g:lightline = { 'colorscheme': 'solarized' }
 
@@ -205,21 +197,6 @@ augroup checktime
     endif
 augroup END
 
-let g:LanguageClient_useFloatingHover = 1
-
-let g:LanguageClient_serverCommands = {
-            \ 'rust': ['ra_lsp_server'],
-            \ 'python': ['pyls'],
-            \ 'cpp': ['clangd'],
-            \ 'c': ['clangd'],
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'typescript': ['javascript-typescript-stdio'],
-            \ 'yaml': ['yaml-language-server', '--stdio'],
-            \ }
-
-
-let g:LanguageClient_autoStart = 1
-
 nmap <silent> <leader><leader> :Commands<CR>
 nmap <silent> <leader>b :Buffers<CR>
 nmap <leader>e :Explore<CR>
@@ -233,7 +210,6 @@ tnoremap <C-w> <C-\><C-n><C-w>
 let g:ale_rust_rls_executable = 'ra_lsp_server'
 let g:ale_rust_rls_toolchain = ''
 let g:ale_linters = { 'asm': [], 'rust': ['rls'] }
-let g:LanguageClient_hoverPreview = "Never"
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'rust': ['rustfmt'],
@@ -242,8 +218,9 @@ let g:ale_fixers = {
             \   'c': ['clang-format'],
             \   'sh': ['shfmt'],
             \   'xml': ['xmllint'],
-            \   'javascript': ['eslint'],
-            \   'typescript': ['eslint'],
+            \   'javascript': ['prettier'],
+            \   'typescript': ['prettier'],
+            \   'json': ['prettier'],
             \}
 let g:ale_fix_on_save = 1
 let g:ale_c_clang_options = "-std=c11 -Wall -pedantic -funroll-loops"
@@ -263,15 +240,6 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 " Make fzf close with ESC
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <F2> :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gD :call LanguageClient#textDocument_implementation()<CR>
-nnoremap <silent> <leader>a :call LanguageClient#textDocument_codeAction()<CR>
-nnoremap <silent> <leader>sa :call LanguageClient#workspace_symbol()<CR>
-nnoremap <silent> <leader>sd :call LanguageClient#textDocument_documentSymbol()<CR>
-
 nnoremap <silent> ge :ALENext<CR>
 nnoremap <silent> gE :ALEPrevious<CR>
 
@@ -284,19 +252,15 @@ nnoremap <leader>ga :Gwrite<CR>
 " close scratch buffer
 nnoremap <silent> <leader>q :<C-w>z<CR>
 
-" ncm2 stuff
-set completeopt=noinsert,menuone,noselect
-autocmd BufEnter * call ncm2#enable_for_buffer()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 nnoremap <silent> <leader>      :<c-u>WhichKey '<leader>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
-let g:neosnippet#enable_complete_done = 1
+"let g:neosnippet#enable_complete_done = 1
 
 " Navigate wrapped lines properly
 nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
+let g:coc_global_extensions = ['coc-json', 'coc-yaml', 'coc-python']

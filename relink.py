@@ -53,7 +53,8 @@ def link(target, dest):
 
 
 def make_immutable(path):
-    print("Making {} immutable, ok?".format(path))
+    if input("Making {} immutable, ok? ".format(path)) != "y":
+        exit("Aborted")
     subprocess.run(["sudo", "chattr", "+i", str(path)], check=True)
 
 

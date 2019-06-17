@@ -1,0 +1,10 @@
+[Default Applications]
+inode/directory=org.kde.dolphin.desktop;
+image/jpeg=iv.desktop;
+image/png=iv.desktop;
+image/gif=iv.desktop;
+text/html=firefox-developer-edition.desktop
+x-scheme-handler/http=firefox-developer-edition.desktop
+x-scheme-handler/https=firefox-developer-edition.desktop
+x-scheme-handler/about=firefox-developer-edition.desktop
+x-scheme-handler/unknown=firefox-developer-edition.desktop

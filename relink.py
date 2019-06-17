@@ -2,17 +2,27 @@
 from pathlib import Path
 import shutil
 import platform
+import subprocess
 
 
 def main():
     for path in Path(".").iterdir():
         if path.match("config"):
             for path in path.iterdir():
-                link(path, expand_path("~/.config") / path.name)
+                if not path.match("mimeapps.list"):
+                    link(path, expand_path("~/.config") / path.name)
         elif not path.match(".*") and not path.samefile(__file__):
             link(path, expand_path("~") / ("." + str(path)))
         elif path.match("swaygen.sh"):
             link(path, expand_path("~/.local/bin/swaygen"))
+
+    # stop applications from daring to rewrite my mimeapps.list
+    # or truncating it to zero bytes for no reason
+    # (looking at you firefox)
+    dest = expand_path("~/.config/mimeapps.list")
+    if not dest.is_file():
+        shutil.copy("config/mimeapps.list", dest)
+        make_immutable(dest)
 
 
 def expand_path(s):
@@ -40,6 +50,11 @@ def link(target, dest):
     dest.parent.mkdir(exist_ok=True)
     dest.symlink_to(target)
     print("{} -> {}".format(target, dest))
+
+
+def make_immutable(path):
+    print("Making {} immutable, ok?".format(path))
+    subprocess.run(["sudo", "chattr", "+i", str(path)], check=True)
 
 
 if __name__ == "__main__":

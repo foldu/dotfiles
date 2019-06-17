@@ -1,4 +1,5 @@
 {
+  "yaml.format.enable": true,
   "languageserver": {
     "rust": {
       "command": "ra_lsp_server",

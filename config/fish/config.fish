@@ -15,6 +15,8 @@ else if type -q vim
     alias vi vim
 end
 
+abbr -a c cargo
+
 # os specific aliases/abbr
 switch (uname)
     case Linux

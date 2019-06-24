@@ -11,11 +11,11 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
 
 " Fuzzy find thing
-Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --bin'}
+Plug 'junegunn/fzf', {'branch': 'release'}
 Plug 'junegunn/fzf.vim'
 
 " Completion
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Modify open file on fs
 Plug 'tpope/vim-eunuch'
@@ -209,7 +209,7 @@ tnoremap <C-w> <C-\><C-n><C-w>
 
 let g:ale_rust_rls_executable = 'ra_lsp_server'
 let g:ale_rust_rls_toolchain = ''
-let g:ale_linters = { 'asm': [], 'rust': ['rls'] }
+let g:ale_linters = { 'asm': [] }
 let g:ale_fixers = {
             \   '*': ['remove_trailing_lines', 'trim_whitespace'],
             \   'rust': ['rustfmt'],

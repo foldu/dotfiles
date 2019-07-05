@@ -220,6 +220,7 @@ let g:ale_fixers = {
             \   'xml': ['xmllint'],
             \   'javascript': ['prettier'],
             \   'typescript': ['prettier'],
+            \   'svelte': ['prettier'],
             \   'json': ['prettier'],
             \}
 let g:ale_fix_on_save = 1

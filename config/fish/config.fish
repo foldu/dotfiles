@@ -17,6 +17,7 @@ end
 
 abbr -a c cargo
 abbr -a ap ansible-playbook
+abbr -a aping ansible all -m ping
 
 # os specific aliases/abbr
 switch (uname)

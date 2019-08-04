@@ -16,6 +16,7 @@ else if type -q vim
 end
 
 abbr -a c cargo
+abbr -a ap ansible-playbook
 
 # os specific aliases/abbr
 switch (uname)

@@ -8,6 +8,8 @@ alias murder "pkill --signal SIGKILL"
 alias x "arr x"
 alias feil file
 
+alias iv iv2
+
 if type -q nvim
     alias vi nvim
     alias vim nvim
@@ -63,7 +65,6 @@ set -x EDITOR nvim
 set -x PAGER less
 set -x TERMINAL alacritty
 set -x BROWSER firefox-developer-edition
-set -x RUST_SRC_PATH "/usr/src/rust/src"
 set -x LESS '-g -i -M -R -w -X'
 set -x MAKEFLAGS "-j "(nproc)
 set -x QT_QPA_PLATFORMTHEME qt5ct

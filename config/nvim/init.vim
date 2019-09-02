@@ -11,7 +11,6 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
 
 " Fuzzy find thing
-Plug 'junegunn/fzf', {'branch': 'release'}
 Plug 'junegunn/fzf.vim'
 
 " Completion
@@ -48,7 +47,7 @@ Plug 'airblade/vim-rooter'
 " Turn vim into a hex editor
 Plug 'fidian/hexmode'
 " Show newest package version for Cargo.toml with virtualtext
-Plug 'meain/vim-package-info', { 'do': 'npm install' }
+"Plug 'meain/vim-package-info', { 'do': 'npm install' }
 " Latex
 Plug 'lervag/vimtex', {'for': ['latex', 'tex']}
 Plug 'justinmk/vim-sneak'
@@ -275,3 +274,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>r <Plug>(coc-rename)
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')

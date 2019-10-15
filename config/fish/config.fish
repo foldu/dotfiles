@@ -2,7 +2,6 @@
 alias mv "mv -iv"
 alias cp "cp -iv"
 alias rm "rm -v"
-alias pish bpython
 alias fm "pcmanfm &"
 alias murder "pkill --signal SIGKILL"
 alias x "arr x"
@@ -20,6 +19,7 @@ end
 abbr -a c cargo
 abbr -a ap ansible-playbook
 abbr -a aping ansible all -m ping
+alias rsync "rsync --info=progress2 --human-readable"
 
 # os specific aliases/abbr
 switch (uname)

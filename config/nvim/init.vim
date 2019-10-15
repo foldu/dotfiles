@@ -219,9 +219,10 @@ let g:ale_fixers = {
             \   'c': ['clang-format'],
             \   'sh': ['shfmt'],
             \   'xml': ['xmllint'],
-            \   'javascript': ['prettier'],
+            \   'html': ['prettier'],
+            \   'javascript': ['eslint'],
             \   'typescript': ['prettier'],
-            \   'svelte': ['prettier'],
+            \   'svelte': ['eslint'],
             \   'json': ['prettier'],
             \}
 let g:ale_fix_on_save = 1

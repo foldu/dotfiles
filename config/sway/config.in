@@ -263,7 +263,7 @@ for_window [title="adonis"] floating enable
 
 # autostart
 exec albert
-exec pickwp daemon
+exec pickwp
 exec transparentd
 exec mako
 exec redshift

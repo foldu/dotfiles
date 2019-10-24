@@ -1,21 +1,22 @@
 {
-  "yaml.format.enable": true,
-  "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
-    },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
+    "yaml.format.enable": true,
+    "rust-analyzer.enableCargoWatchOnStartup": "enabled",
+    "languageserver": {
+        "clangd": {
+            "command": "clangd",
+            "rootPatterns": [
+                "compile_flags.txt",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "filetypes": ["c", "cpp", "objc", "objcpp"]
+        },
+        "dockerfile": {
+            "command": "docker-langserver",
+            "filetypes": ["dockerfile"],
+            "args": ["--stdio"]
+        }
     }
-  }
 }

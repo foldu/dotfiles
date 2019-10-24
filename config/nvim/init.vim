@@ -266,7 +266,7 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-let g:coc_global_extensions = ['coc-json', 'coc-yaml', 'coc-python', 'coc-lists', 'coc-yaml']
+let g:coc_global_extensions = ['coc-json', 'coc-yaml', 'coc-python', 'coc-lists', 'coc-yaml', 'coc-rust-analyzer']
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"

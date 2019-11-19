@@ -11,6 +11,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
 
 " Fuzzy find thing
+Plug 'junegunn/fzf', { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Completion
@@ -18,8 +19,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Modify open file on fs
 Plug 'tpope/vim-eunuch'
-" Expand single line expression to multi line expression
-Plug 'AndrewRadev/splitjoin.vim'
 " Automatically resize windows when switching to them
 Plug 'roman/golden-ratio'
 " Better status line
@@ -41,7 +40,7 @@ Plug 'airblade/vim-gitgutter'
 " Show command completion help when hitting <leader>
 Plug 'liuchengxu/vim-which-key'
 " GDB integration TODO: use this
-Plug 'sakhnik/nvim-gdb'
+"Plug 'sakhnik/nvim-gdb'
 " Automatically change working directory when opening project dirs
 Plug 'airblade/vim-rooter'
 " Turn vim into a hex editor
@@ -55,6 +54,11 @@ Plug 'justinmk/vim-sneak'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
+" Highlight yanked
+Plug 'machakann/vim-highlightedyank'
+" Better matching parens highlighting
+Plug 'andymass/vim-matchup'
+
 " Syntax highlighters
 Plug 'sheerun/vim-polyglot'
 call plug#end()
@@ -63,9 +67,10 @@ let mapleader=" "
 
 " Colors
 "let g:solarized_use16 = 1
+set termguicolors
 syntax enable
 set background=light
-colorscheme solarized
+colorscheme solarized8_flat
 set fillchars+=vert:│
 let g:lightline = { 'colorscheme': 'solarized' }
 
@@ -120,18 +125,27 @@ set novisualbell
 set t_vb=
 set tm=500
 
-" Search
-" Ignore case when searching
+" Usable search
 set ignorecase
-
-" When searching try to be smart about cases
 set smartcase
-
-" Highlight search results
 set hlsearch
-
-" Highlight all search results
 set incsearch
+
+" center search results
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Navigate wrapped lines properly
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+
+" Show min 2 lines above and below cursor
+set scrolloff=2
 
 " Show matching brackets when cursor is over them
 set showmatch
@@ -152,6 +166,11 @@ set ruler
 set laststatus=2
 
 set hidden
+
+" persistent undo
+set undofile
+let &undodir = getenv('HOME') .. '/.local/share/nvim/undir'
+call mkdir(&undodir, 'p')
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
@@ -232,16 +251,41 @@ let g:ale_virtualtext_cursor = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-nmap <leader>z <Plug>Zeavim
-vmap <leader>z <Plug>ZVVisSelection
-nmap <leader><leader>z <Plug>ZVKeyDocset
-
 " Hide statusline of terminal buffer
+" fzf in floating window
 autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+autocmd  FileType fzf set noshowmode noruler nonu
 " Make fzf close with ESC
 autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+"autocmd  FileType fzf set laststatus=0 noshowmode noruler
+"            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+if has('nvim') && exists('&winblend') && &termguicolors
+  set winblend=20
+
+  hi NormalFloat guibg=None
+  if exists('g:fzf_colors.bg')
+    call remove(g:fzf_colors, 'bg')
+  endif
+
+  if stridx($FZF_DEFAULT_OPTS, '--border') == -1
+    let $FZF_DEFAULT_OPTS .= ' --border'
+  endif
+
+  function! FloatingFZF()
+    let width = float2nr(&columns * 0.8)
+    let height = float2nr(&lines * 0.6)
+    let opts = { 'relative': 'editor',
+               \ 'row': (&lines - height) / 2,
+               \ 'col': (&columns - width) / 2,
+               \ 'width': width,
+               \ 'height': height }
+
+    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+  endfunction
+
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+endif
 
 nnoremap <silent> ge :ALENext<CR>
 nnoremap <silent> gE :ALEPrevious<CR>
@@ -255,16 +299,10 @@ nnoremap <leader>ga :Gwrite<CR>
 " close scratch buffer
 nnoremap <silent> <leader>q :<C-w>z<CR>
 
+" vim whichkey
 nnoremap <silent> <leader>      :<c-u>WhichKey '<leader>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-
-"let g:neosnippet#enable_complete_done = 1
-
-" Navigate wrapped lines properly
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
+set timeoutlen=300
 
 let g:coc_global_extensions = ['coc-json', 'coc-yaml', 'coc-python', 'coc-lists', 'coc-yaml', 'coc-rust-analyzer']
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"

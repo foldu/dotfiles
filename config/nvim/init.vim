@@ -228,6 +228,9 @@ nmap <silent> <leader>cc :Clap colors<CR>
 nmap <leader>e :Explore<CR>
 nmap <silent> <leader>f :Clap files<CR>
 nmap <silent> <leader>t :terminal<CR>
+" use <C-n>/<C-p> instead of <C-j>/<C-k>
+autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#handler#navigate_result('down')<CR>
+autocmd FileType clap_input inoremap <silent> <buffer> <C-p> <C-R>=clap#handler#navigate_result('up')<CR>
 
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>

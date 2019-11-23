@@ -69,6 +69,8 @@ set -x LESS '-g -i -M -R -w -X'
 set -x MAKEFLAGS "-j "(nproc)
 set -x QT_QPA_PLATFORMTHEME qt5ct
 set -x FZF_DEFAULT_COMMAND 'rg --files'
+# need to set this so flatpak programs are visible in launchers
+set -x XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/"
 
 # PATH
 set -U fish_user_paths "$HOME/.cargo/bin" "$HOME/.local/bin"

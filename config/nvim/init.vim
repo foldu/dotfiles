@@ -6,21 +6,16 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-" Color theme
+" Color themes
 Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
-
-" Fuzzy find thing
-Plug 'junegunn/fzf', { 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'morhetz/gruvbox'
 
 " Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Modify open file on fs
 Plug 'tpope/vim-eunuch'
-" Automatically resize windows when switching to them
-Plug 'roman/golden-ratio'
 " Better status line
 Plug 'itchyny/lightline.vim'
 " You need this
@@ -31,14 +26,16 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rsi'
 " Apply editorconfig
 Plug 'editorconfig/editorconfig-vim'
-" Lint thing
-Plug 'w0rp/ale'
 " Some git functions
 Plug 'tpope/vim-fugitive'
 " Show git file status in the gutter (left of line numbers)
 Plug 'airblade/vim-gitgutter'
 " Show command completion help when hitting <leader>
 Plug 'liuchengxu/vim-which-key'
+" Fuzzy finder
+Plug 'liuchengxu/vim-clap'
+" Semantic code navigation
+Plug 'liuchengxu/vista.vim'
 " GDB integration TODO: use this
 "Plug 'sakhnik/nvim-gdb'
 " Automatically change working directory when opening project dirs
@@ -50,12 +47,14 @@ Plug 'fidian/hexmode'
 " Latex
 Plug 'lervag/vimtex', {'for': ['latex', 'tex']}
 Plug 'justinmk/vim-sneak'
+
 " snippets
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
 " Highlight yanked
 Plug 'machakann/vim-highlightedyank'
+
 " Better matching parens highlighting
 Plug 'andymass/vim-matchup'
 
@@ -66,7 +65,8 @@ call plug#end()
 let mapleader=" "
 
 " Colors
-"let g:solarized_use16 = 1
+" enables 24-bit colors for TUI
+" don't remove this
 set termguicolors
 syntax enable
 set background=light
@@ -76,7 +76,6 @@ let g:lightline = { 'colorscheme': 'solarized' }
 
 " Use the damn clipboard
 set clipboard=unnamedplus
-set go+=a
 
 " paste from primary clipboard
 nnoremap <C-p> :read !xsel -o<CR>
@@ -85,11 +84,10 @@ nnoremap <C-p> :read !xsel -o<CR>
 filetype plugin on
 
 " line numbers
-set relativenumber
 set number
 
 " except for terminals
-au TermOpen * setlocal nonumber norelativenumber
+autocmd TermOpen * setlocal nonumber
 
 " Wrap lines
 set linebreak
@@ -122,8 +120,6 @@ set nomodeline
 " Shut up
 set noerrorbells
 set novisualbell
-set t_vb=
-set tm=500
 
 " Usable search
 set ignorecase
@@ -165,6 +161,7 @@ set ruler
 " remove annoying bar
 set laststatus=2
 
+" this is important
 set hidden
 
 " persistent undo
@@ -206,6 +203,11 @@ set noshowmode
 " don't make my statusbar too big
 "set cmdheight=1
 
+vnoremap > >gv
+vnoremap < <gv
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-w> <C-\><C-n><C-w>
+
 " listen for file changes outside of nvim
 " https://github.com/neovim/neovim/issues/2127
 augroup checktime
@@ -217,78 +219,15 @@ augroup checktime
     endif
 augroup END
 
-nmap <silent> <leader><leader> :Commands<CR>
-nmap <silent> <leader>b :Buffers<CR>
+
+" fixing clap colors for solarized
+"highlight ClapInput Pmenu
+nmap <silent> <leader><leader> :Clap commands<CR>
+nmap <silent> <leader>b :Clap buffers<CR>
+nmap <silent> <leader>cc :Clap colors<CR>
 nmap <leader>e :Explore<CR>
-nmap <silent> <leader>f :Files<CR>
+nmap <silent> <leader>f :Clap files<CR>
 nmap <silent> <leader>t :terminal<CR>
-vnoremap > >gv
-vnoremap < <gv
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-w> <C-\><C-n><C-w>
-
-let g:ale_rust_rls_executable = 'ra_lsp_server'
-let g:ale_rust_rls_toolchain = ''
-let g:ale_linters = { 'asm': [] }
-let g:ale_fixers = {
-            \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \   'rust': ['rustfmt'],
-            \   'python': ['black'],
-            \   'cpp': ['clang-format'],
-            \   'c': ['clang-format'],
-            \   'sh': ['shfmt'],
-            \   'xml': ['xmllint'],
-            \   'html': ['prettier'],
-            \   'javascript': ['eslint'],
-            \   'typescript': ['prettier'],
-            \   'svelte': ['eslint'],
-            \   'json': ['prettier'],
-            \}
-let g:ale_fix_on_save = 1
-let g:ale_c_clang_options = "-std=c11 -Wall -pedantic -funroll-loops"
-let g:ale_cpp_clang_options = "-std=c++17 -Wall -pedantic -funroll-loops"
-let g:ale_virtualtext_cursor = 1
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Hide statusline of terminal buffer
-" fzf in floating window
-autocmd! FileType fzf
-autocmd  FileType fzf set noshowmode noruler nonu
-" Make fzf close with ESC
-autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
-"autocmd  FileType fzf set laststatus=0 noshowmode noruler
-"            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
-if has('nvim') && exists('&winblend') && &termguicolors
-  set winblend=20
-
-  hi NormalFloat guibg=None
-  if exists('g:fzf_colors.bg')
-    call remove(g:fzf_colors, 'bg')
-  endif
-
-  if stridx($FZF_DEFAULT_OPTS, '--border') == -1
-    let $FZF_DEFAULT_OPTS .= ' --border'
-  endif
-
-  function! FloatingFZF()
-    let width = float2nr(&columns * 0.8)
-    let height = float2nr(&lines * 0.6)
-    let opts = { 'relative': 'editor',
-               \ 'row': (&lines - height) / 2,
-               \ 'col': (&columns - width) / 2,
-               \ 'width': width,
-               \ 'height': height }
-
-    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-  endfunction
-
-  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-endif
-
-nnoremap <silent> ge :ALENext<CR>
-nnoremap <silent> gE :ALEPrevious<CR>
 
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -296,15 +235,25 @@ nnoremap <silent> <leader>gc :Gcommit<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>ga :Gwrite<CR>
 
-" close scratch buffer
-nnoremap <silent> <leader>q :<C-w>z<CR>
-
 " vim whichkey
 nnoremap <silent> <leader>      :<c-u>WhichKey '<leader>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 set timeoutlen=300
 
-let g:coc_global_extensions = ['coc-json', 'coc-yaml', 'coc-python', 'coc-lists', 'coc-yaml', 'coc-rust-analyzer']
+" disable offscreen matching
+let g:matchup_matchparen_offscreen={}
+
+let g:coc_global_extensions = [
+            \ 'coc-json',
+            \ 'coc-yaml',
+            \ 'coc-python',
+            \ 'coc-lists',
+            \ 'coc-yaml',
+            \ 'coc-rust-analyzer',
+            \ 'coc-html',
+            \ 'coc-tsserver',
+            \ 'coc-css'
+            \]
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
@@ -315,6 +264,12 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>r <Plug>(coc-rename)
 nmap <leader>a <Plug>(coc-codeaction)
+
+command! -nargs=0 Format :call CocAction('format')
+" Autoformat before save
+autocmd BufWritePre * Format
+
+nnoremap <silent> <leader>vv :Vista coc<CR>
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')

@@ -103,8 +103,6 @@ filetype indent on
 filetype on
 
 set autoindent
-set smartindent
-set smarttab
 
 " Linux Tarballs told me tabs are 8 spaces so it must be true
 set tabstop=8
@@ -226,7 +224,9 @@ nmap <silent> <leader><leader> :Clap commands<CR>
 nmap <silent> <leader>b :Clap buffers<CR>
 nmap <silent> <leader>cc :Clap colors<CR>
 nmap <leader>e :Explore<CR>
-nmap <silent> <leader>f :Clap files<CR>
+nmap <silent> <leader>f :Clap gfiles<CR>
+nmap <silent> <leader>F :Clap files<CR>
+nmap <silent> <leader>s :Clap grep<CR>
 nmap <silent> <leader>t :terminal<CR>
 " use <C-n>/<C-p> instead of <C-j>/<C-k>
 autocmd FileType clap_input inoremap <silent> <buffer> <C-n> <C-R>=clap#handler#navigate_result('down')<CR>

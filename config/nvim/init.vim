@@ -7,9 +7,9 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 " Color themes
-Plug 'altercation/vim-colors-solarized'
 Plug 'lifepillar/vim-solarized8'
 Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 
 " Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -70,9 +70,9 @@ let mapleader=" "
 set termguicolors
 syntax enable
 set background=light
-colorscheme solarized8_flat
+colorscheme nord
 set fillchars+=vert:│
-let g:lightline = { 'colorscheme': 'solarized' }
+let g:lightline = { 'colorscheme': 'nord' }
 
 " Use the damn clipboard
 set clipboard=unnamedplus

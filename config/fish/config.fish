@@ -85,65 +85,65 @@ set fish_greeting
 # rules for universal variables, would've been much easier
 
 # the default color
-set fish_color_normal normal
+#set fish_color_normal normal
 
 # the color for commands
-set fish_color_command 586e75
+#set fish_color_command 586e75
 
 # the color for quoted blocks of text
-set fish_color_quote 839496
+#set fish_color_quote 839496
 
 # the color for IO redirections
-set fish_color_redirection 6c71c4
+#set fish_color_redirection 6c71c4
 
 # the color for process separators like ';' and '&'
-set fish_color_end 268bd2
+#set fish_color_end 268bd2
 
 # the color used to highlight potential errors
-set fish_color_error dc322f
+#set fish_color_error dc322f
 
 # the color for regular command parameters
-set fish_color_param 657b83
+#set fish_color_param 657b83
 
 # the color used for code comments
-set fish_color_comment 93a1a1
+#set fish_color_comment 93a1a1
 
 # the color used to highlight matching parenthesis
-set fish_color_match --background=brblue
+#set fish_color_match --background=brblue
 
 # the color used when selecting text (in vi visual mode)
-set fish_color_selection white --bold --background=brblack
+#set fish_color_selection white --bold --background=brblack
 
 # used to highlight history search matches and the selected pager item
 # (must be a background)
-set fish_color_search_match bryellow --background=white
+#set fish_color_search_match bryellow --background=white
 
 # the color for parameter expansion operators like '*' and '~'
-set fish_color_operator 00a6b2
+#set fish_color_operator 00a6b2
 
 # the color used to highlight character escapes like '\\n' and '\\x70'
-set fish_color_escape 00a6b2
+#set fish_color_escape 00a6b2
 
 # the color used for autosuggestions
-set fish_color_autosuggestion 93a1a1
+#set fish_color_autosuggestion 93a1a1
 
 # the color for the '^C' indicator on a canceled command
-set fish_color_cancel -r
+#set fish_color_cancel -r
 
 # the color of the progress bar at the bottom left corner
-set fish_pager_color_progress brwhite --background=cyan
+#set fish_pager_color_progress brwhite --background=cyan
 
 # the background color of a line
 #set fish_pager_color_background
 
 # the color of the prefix string, i.e. the string that is to be completed
-set fish_pager_color_prefix cyan --underline
+#set fish_pager_color_prefix cyan --underline
 
 # the color of the completion itself
-set fish_pager_color_completion green
+#set fish_pager_color_completion green
 
 # the color of the completion description
-set fish_pager_color_description B3A06D
+#set fish_pager_color_description B3A06D
 
 # fish_pager_color_background of every second unselected completion.
 #set fish_pager_color_secondary_background
